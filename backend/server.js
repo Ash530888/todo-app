@@ -1,6 +1,10 @@
-import express from 'express'; // express framework, helps set up server, define routes, manage requests/responses
+/*import express from 'express'; // express framework, helps set up server, define routes, manage requests/responses
 import cors from 'cors'; // allows frontend to communicate w/ backend
-import { Pool } from 'pg'; // to create a pool of PostgreSQL client connections
+import { Pool } from 'pg'; // to create a pool of PostgreSQL client connections*/
+
+const express = require('express');
+const cors = require('cors');
+const { Pool } = require('pg');
 
 const app = express(); // instance of express app
 const port = 3000; // port that the backend express server will run on

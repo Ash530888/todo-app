@@ -1,1 +1,17 @@
-<p>todo works!</p>
+<div class="todo-container">
+    <ul class="todos" *ngFor="let todo of todos">
+        <li>
+            <p>{{todo.name}}</p>
+            <p>Due Date: {{todo.datetime_due}}</p>
+        </li>
+    </ul>
+<div class="new-todo">
+    <label for="new-todo-name">Name</label>
+    <input type="text" class="new-todo-name" id="new-todo-name" #todoName/>
+    <label for="new-todo-due">Date & time Due</label>
+    <input type="datetime" class="new-todo-due" id="new-todo-due" #todoDue/>
+    <label for="new-todo-due">details</label>
+    <input type="text" class="new-todo-details" id="new-todo-details" #todoDetails/>
+    <button (click)="addTodo(todoName.value, todoDue.valueAsDate, todoDetails.value)">Add</button>
+</div>
+</div>
