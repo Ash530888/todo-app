@@ -36,9 +36,19 @@ app.get('/api/todos', async (req, res) => {
 app.post('/api/todos', async (req, res) => {
     try{
         const new_todo = req.body;
-        const query = `INSERT INTO todos (datetime_due, name, details) VALUES (${new_todo.datetime_due}, ${new_todo.name}, ${new_todo.details}) RETURNING *`;
-        const result = await pool.query(query);
-        res.status(201).json(result.rows[0]);
+        console.log("new_todo.datetime_due "+new_todo.datetime_due);
+        if(new_todo.datetime_due){
+            console.log("if(new_todo.datetime_due)");
+            query = `INSERT INTO todos (datetime_due, name, details) VALUES ($1, $2, $3) RETURNING *`;
+            values = [new Date(new_todo.datetime_due),new_todo.name, new_todo.details];
+        }
+        else{
+            query = `INSERT INTO todos (name, details) VALUES ($1, $2) RETURNING *`;
+            values = [new_todo.name, new_todo.details];
+        }
+        
+        const result = await pool.query(query, values);
+        res.status(201).json(result.rows);
     }
     catch(error){
         console.error('Failed to add new todo to database:', error);

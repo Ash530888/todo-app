@@ -1,17 +1,23 @@
 <div class="todo-container">
-    <ul class="todos" *ngFor="let todo of todos">
-        <li>
+    <h1>Todo List</h1>
+
+    <ul class="todos">
+        <li *ngFor="let todo of todos">
             <p>{{todo.name}}</p>
-            <p>Due Date: {{todo.datetime_due}}</p>
+            <p *ngIf="todo.datetime_due !== null">Due Date: {{todo.datetime_due.toDateString()}}</p>
+            <p *ngIf="todo.datetime_created !== null">Date Created: {{todo.datetime_created.toDateString()}}</p>
         </li>
     </ul>
-<div class="new-todo">
-    <label for="new-todo-name">Name</label>
-    <input type="text" class="new-todo-name" id="new-todo-name" #todoName/>
-    <label for="new-todo-due">Date & time Due</label>
-    <input type="datetime" class="new-todo-due" id="new-todo-due" #todoDue/>
-    <label for="new-todo-due">details</label>
-    <input type="text" class="new-todo-details" id="new-todo-details" #todoDetails/>
-    <button (click)="addTodo(todoName.value, todoDue.valueAsDate, todoDetails.value)">Add</button>
-</div>
+
+    <h2>Create a new todo</h2>
+
+    <div class="new-todo">
+        <label for="new-todo-name">Name</label>
+        <input type="text" class="new-todo-name" id="new-todo-name" #todoName/>
+        <label for="new-todo-due">Due Date</label>
+        <input type="datetime-local" class="new-todo-due" id="new-todo-due" #todoDue/>
+        <label for="new-todo-due">details</label>
+        <input type="text" class="new-todo-details" id="new-todo-details" #todoDetails/>
+        <button (click)="addTodo(todoName.value, todoDue.value, todoDetails.value)">Add</button>
+    </div>
 </div>

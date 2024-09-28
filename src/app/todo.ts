@@ -1,6 +1,6 @@
-interface Todo{
-    id: string,
-    datetime_created: Date,
+export interface Todo{
+    id: number,
+    datetime_created: Date | null,
     datetime_due: Date | null, 
     name: string, 
     details: string
