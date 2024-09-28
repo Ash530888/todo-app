@@ -25,12 +25,15 @@ export class TodoComponent implements OnInit{
   }
 
   addTodo(name: string, datetime_due: string, details: string): void{
-    this.todoService.addTodo(name, datetime_due, details).subscribe((todo: Todo) => {
-      todo = {...todo,
-      datetime_created: todo.datetime_created ? new Date(todo.datetime_created) : null,
-      datetime_due: todo.datetime_due ? new Date(todo.datetime_due) : null}
-      this.todos.push(todo);
-    });
-    this.fetchTodos();
+    if(name){
+      this.todoService.addTodo(name, datetime_due, details).subscribe((todo: Todo) => {
+        todo = {...todo,
+        datetime_created: todo.datetime_created ? new Date(todo.datetime_created) : null,
+        datetime_due: todo.datetime_due ? new Date(todo.datetime_due) : null}
+        this.todos.push(todo);
+      });
+      this.fetchTodos();
+    }
+    
   }
 }

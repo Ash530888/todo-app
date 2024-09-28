@@ -1,23 +1,41 @@
-<div class="todo-container">
-    <h1>Todo List</h1>
+<body>
+    <div class="container mt-5 todo-container">
+        <h1 class="text-center mb-4">Todo List</h1>
 
-    <ul class="todos">
-        <li *ngFor="let todo of todos">
-            <p>{{todo.name}}</p>
-            <p *ngIf="todo.datetime_due !== null">Due Date: {{todo.datetime_due.toDateString()}}</p>
-            <p *ngIf="todo.datetime_created !== null">Date Created: {{todo.datetime_created.toDateString()}}</p>
-        </li>
-    </ul>
+        <ul class="list-group mb-4">
+            <li class="list-group-item" *ngFor="let todo of todos">
+                <p class="mb-0"><strong>{{todo.name}}</strong></p>
+                <p *ngIf="todo.datetime_due !== null" class="text-muted small">
+                    Due Date: {{todo.datetime_due.toDateString()}}
+                </p>
+                <p *ngIf="todo.datetime_created !== null" class="text-muted small">
+                    Date Created: {{todo.datetime_created.toDateString()}}
+                </p>
+            </li>
+        </ul>
 
-    <h2>Create a new todo</h2>
+        <h2 class="text-center mb-3">Create a new todo</h2>
 
-    <div class="new-todo">
-        <label for="new-todo-name">Name</label>
-        <input type="text" class="new-todo-name" id="new-todo-name" #todoName/>
-        <label for="new-todo-due">Due Date</label>
-        <input type="datetime-local" class="new-todo-due" id="new-todo-due" #todoDue/>
-        <label for="new-todo-due">details</label>
-        <input type="text" class="new-todo-details" id="new-todo-details" #todoDetails/>
-        <button (click)="addTodo(todoName.value, todoDue.value, todoDetails.value)">Add</button>
+        <form>
+            <div class="form-group">
+                <label for="new-todo-name">Name</label>
+                <input type="text" class="form-control mb-2" id="new-todo-name" #todoName placeholder="Enter todo name" required/>
+                <div class="invalid-feedback" *ngIf="!todoName.value">Name is required</div>
+            </div>
+            <div class="form-group">
+                <label for="new-todo-due">Due Date</label>
+                <input type="datetime-local" class="form-control mb-2" id="new-todo-due" #todoDue/>
+            </div>
+            <div class="form-group">
+                <label for="new-todo-details">Details</label>
+                <input type="text" class="form-control mb-2" id="new-todo-details" #todoDetails placeholder="Enter details"/>
+            </div>
+            
+            <div class="text-center">
+                <button class="btn btn-success" (click)="addTodo(todoName.value, todoDue.value, todoDetails.value)">
+                    Add Todo
+                </button>
+            </div>
+        </form>
     </div>
-</div>
+</body>
