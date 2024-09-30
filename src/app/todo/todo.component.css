@@ -1,34 +1,40 @@
 body {
-    height: 100%; /* Ensure both html and body take full height */
     background-color: bisque;
-    display: flex; /* Flexbox ensures the content can grow/shrink */
-    justify-content: center; /* Center the container horizontally */
-    align-items: center; /* Center the container vertically */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align content at the top */
+    min-height: 100vh; /* Ensure body takes full height of the viewport */
+    margin: 0;
 }
 
-body{
-    background-color: bisque;
-}
-
-.todo-container{
-    background-color: skyblue;
+.todo-container {
+    background-color:slateblue; /* White background for the "paper" */
     max-width: 75%;
     margin: 50px auto;
     padding: 20px;
     border: 5px solid;
     border-color: #ccc;
     border-radius: 8px;
-    box-shadow: 0 4px 8px;
-    background-image: repeating-linear-gradient(
-        to bottom,
-        #ddd, /*line colour */
-        #ddd 1px,
-        transparent 20px /* space between lines */
-    );
-    background-size: 100% 20px;
-    background-repeat: repeat;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-ul.todos{
-    list-style-type: none;
+li {
+    display: flex;
+    align-items: center;
+    background-color:paleturquoise; /* Ensure the background of each li is white */
+    padding: 10px 0;
+    margin-bottom: 10px;
+    background-image: "";
+    justify-content: space-between;
+}
+
+li button{
+    background-color: transparent;
+    border: transparent;
+}
+
+
+.delete-button img{
+    background-color: transparent;
+    height: 35px;
 }

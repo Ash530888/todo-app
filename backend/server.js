@@ -56,6 +56,43 @@ app.post('/api/todos', async (req, res) => {
     }
 });
 
+app.put('/api/todos/:id',  async (req, res) => {
+    try{
+        console.log("updating todo");
+        const todoId = req.params.id;
+        const updatedTodo = req.body;
+        console.log(todoId);
+        console.log(updatedTodo.name);
+        if(updatedTodo.datetime_due){
+            query = `UPDATE todos SET datetime_due = $1, name = $2, details = $3 WHERE id=$4`;
+            values = [new Date(updatedTodo.datetime_due),updatedTodo.name, updatedTodo.details, todoId];
+        }
+        else{
+            query = `UPDATE todos SET name = $1, details = $2 WHERE id=$3`;
+            values = [updatedTodo.name, updatedTodo.details, todoId];
+        }
+
+        const result=await pool.query(query, values);
+        console.log(result);
+        res.status(201).json({ message: "Todo updated successfully"});
+
+    } catch(error){
+        console.error('Error adding todo:', error);
+        res.status(500).json({error: error.message})
+    }
+});
+
+app.delete('/api/todos/:id', async (req, res) => {
+    try{
+        const result=await pool.query(`DELETE FROM todos WHERE id = $1`, [req.params.id]);
+        console.log(result);
+        res.status(201).json({ message: "Deleted todo with id"+req.params.id});
+    } catch(error){
+        console.error('Error deleting todo with id '+req.params.id+': ', error);
+        res.status(500).json({error: error.message})
+    }
+});
+
 // Starting the server
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);

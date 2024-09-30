@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoService } from '../todo.service';
 import { Todo } from '../todo';
+import $ from 'jquery';
+
 
 @Component({
   selector: 'app-todo',
@@ -9,6 +11,7 @@ import { Todo } from '../todo';
 })
 export class TodoComponent implements OnInit{
   todos: Todo[] = [];
+  selectedTodo: Todo|null = null;
 
   constructor(private todoService : TodoService) {}
 
@@ -36,4 +39,44 @@ export class TodoComponent implements OnInit{
     }
     
   }
+
+  openModal(todo: Todo) {
+    this.selectedTodo = { ...todo }; // Clone to avoid direct mutation
+    const modal = document.getElementById('todoModal');
+    if(modal) modal.style.display = 'block';
+    
+  }
+
+  closeModal() {
+    const modal = document.getElementById('todoModal');
+    if(modal) modal.style.display = 'none';
+    
+  }
+
+
+
+  updateTodo() {
+    if(this.selectedTodo){
+      this.todoService.updateTodo(this.selectedTodo)
+          .subscribe(response => {
+              console.log('Todo updated successfully:', response);
+              this.fetchTodos(); // Fetch the latest todos
+              this.closeModal();
+          }, error => {
+              console.error('Error updating todo:', error);
+          });
+    }
+  }
+
+  deleteTodo(todo: Todo){
+    this.todoService.deleteTodo(todo)
+    .subscribe(response => {
+        console.log('Todo deleted successfully:', response);
+        this.fetchTodos(); // Fetch the latest todos
+    }, error => {
+        console.error('Error deleting todo:', error);
+    });
+  }
+
+  
 }

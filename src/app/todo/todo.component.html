@@ -3,15 +3,20 @@
         <h1 class="text-center mb-4">Todo List</h1>
 
         <ul class="list-group mb-4">
-            <li class="list-group-item" *ngFor="let todo of todos">
-                <p class="mb-0"><strong>{{todo.name}}</strong></p>
-                <p *ngIf="todo.datetime_due !== null" class="text-muted small">
-                    Due Date: {{todo.datetime_due.toDateString()}}
-                </p>
-                <p *ngIf="todo.datetime_created !== null" class="text-muted small">
-                    Date Created: {{todo.datetime_created.toDateString()}}
-                </p>
-            </li>
+            
+                <li class="list-group-item" *ngFor="let todo of todos">
+                    <button data-toggle="modal" data-target="#todoModal" (click)="openModal(todo)">
+                        <p class="mb-0"><strong>{{todo.name}}</strong></p>
+                        <p *ngIf="todo.datetime_due !== null" class="text-muted small">
+                            Due Date & time: {{todo.datetime_due.toDateString()}}, {{todo.datetime_due.toTimeString()}}
+                        </p>
+                    </button>
+                    <button class="delete-button" (click)="deleteTodo(todo)">
+                        <img src="trash.png" alt="delete">
+                    </button>
+                </li>
+            
+            
         </ul>
 
         <h2 class="text-center mb-3">Create a new todo</h2>
@@ -38,4 +43,48 @@
             </div>
         </form>
     </div>
+
+    <!-- The Modal -->
+    <div class="modal" id="todoModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Update Todo</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" (click)="closeModal()"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <form *ngIf="selectedTodo" (ngSubmit)="updateTodo()">
+                        <p>Date Created: {{selectedTodo.datetime_created}}</p>
+                        
+                        <div class="form-group">
+                            <label for="modal-todo-name">Name</label>
+                            <input type="text" class="form-control" id="modal-todo-name" [(ngModel)]="selectedTodo.name" name="name" required/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="modal-todo-due">Due Date</label>
+                            <input type="datetime-local" class="form-control" id="modal-todo-due" [(ngModel)]="selectedTodo.datetime_due" name="datetime_due"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="modal-todo-details">Details</label>
+                            <textarea class="form-control" id="modal-todo-details" [(ngModel)]="selectedTodo.details" name="details"></textarea>
+                        </div>
+
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="closeModal()">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+      
 </body>
